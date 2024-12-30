@@ -48,25 +48,32 @@ const infoRouter = require('./routes/info');
 
 const app = express();
 
-// Apply CORS before other middleware and configure it for localhost
-/*
-app.use(cors({
-    origin: 'http://localhost:5173', // Update to your frontend's address
-    methods: 'GET,POST,PUT,DELETE',  // Specify allowed methods if needed
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
-    credentials: true
-}));
-*/
+const allowedOrigins = [
+  'http://localhost:5173',    // Vite default
+  'http://localhost:3000',    // Common development port
+  'https://your-production-domain.com'  // Replace with your domain
+];
 
 const corsOptions = {
-  origin: true, // Reflect the request origin, or use ['https://yourdomain.com'] for specific domains
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-  maxAge: 86400 // 24 hours
+  maxAge: 86400
 };
 
 app.use(cors(corsOptions));
+
+
 
 
 // Other middlewares
