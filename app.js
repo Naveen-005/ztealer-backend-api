@@ -48,27 +48,11 @@ const infoRouter = require('./routes/info');
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:5173',    // Vite default
-  'http://localhost:3000',    // Common development port
-  'https://your-production-domain.com'  // Replace with your domain
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  maxAge: 86400
+  credentials: false
 };
 
 app.use(cors(corsOptions));
