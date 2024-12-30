@@ -9,6 +9,7 @@ router.post('/', function(req, res, next) {
     targetInstance.save()
     .then((m_res)=>{
         //console.log("m_res:",m_res);
+        res.status(200)
         res.json({uid:m_res._id})
 
     })
