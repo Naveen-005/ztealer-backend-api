@@ -49,12 +49,25 @@ const infoRouter = require('./routes/info');
 const app = express();
 
 // Apply CORS before other middleware and configure it for localhost
+/*
 app.use(cors({
     origin: 'http://localhost:5173', // Update to your frontend's address
     methods: 'GET,POST,PUT,DELETE',  // Specify allowed methods if needed
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
     credentials: true
 }));
+*/
+
+const corsOptions = {
+  origin: true, // Reflect the request origin, or use ['https://yourdomain.com'] for specific domains
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 86400 // 24 hours
+};
+
+app.use(cors(corsOptions));
+
 
 // Other middlewares
 app.use(logger('dev'));
