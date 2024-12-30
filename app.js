@@ -49,10 +49,10 @@ const infoRouter = require('./routes/info');
 const app = express();
 
 const corsOptions = {
-  origin: '*',
+  origin: 'http://localhost:5173',  // Or array of allowed origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: false
+  credentials: true
 };
 
 app.use(cors(corsOptions));
